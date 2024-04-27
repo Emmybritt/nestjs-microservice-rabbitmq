@@ -1,0 +1,24 @@
+{
+  "name": "flight",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/api/flight-booking/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "flight:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "flight:build:development"
+        },
+        "production": {
+          "buildTarget": "flight:build:production"
+        }
+      }
+    }
+  }
+}

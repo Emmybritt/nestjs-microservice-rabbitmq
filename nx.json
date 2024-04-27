@@ -35,8 +35,15 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/travel-booking-platform-e2e/**/*"]
+      "exclude": []
     }
   ],
-  "nxCloudAccessToken": "NWYxOWNlZDktODc4OS00NDFlLWE1YjktNmFiNThiM2Y2NjM5fHJlYWQtd3JpdGU="
+  "nxCloudAccessToken": "NWYxOWNlZDktODc4OS00NDFlLWE1YjktNmFiNThiM2Y2NjM5fHJlYWQtd3JpdGU=",
+  "targetDefaults": {
+    "@nx/js:tsc": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    }
+  }
 }

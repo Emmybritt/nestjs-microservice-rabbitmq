@@ -1,0 +1,24 @@
+{
+  "name": "hotel",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/api/hotel-booking/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "hotel:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "hotel:build:development"
+        },
+        "production": {
+          "buildTarget": "hotel:build:production"
+        }
+      }
+    }
+  }
+}

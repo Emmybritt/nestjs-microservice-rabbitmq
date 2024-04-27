@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@travel-booking-platform/nest": ["libs/nest/datas/src/index.ts"],
+      "@travel-booking-platform/types": ["libs/nest/types/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

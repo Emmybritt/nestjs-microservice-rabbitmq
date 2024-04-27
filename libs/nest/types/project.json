@@ -1,0 +1,20 @@
+{
+  "name": "types",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/nest/types/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/nest/types",
+        "tsConfig": "libs/nest/types/tsconfig.lib.json",
+        "packageJson": "libs/nest/types/package.json",
+        "main": "libs/nest/types/src/index.ts",
+        "assets": ["libs/nest/types/*.md"]
+      }
+    }
+  }
+}

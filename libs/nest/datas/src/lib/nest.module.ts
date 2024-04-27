@@ -18,6 +18,7 @@ import { Environment } from './boostrap';
 import { JwtStrategy, SessionSerializer } from './strategies';
 import { ExistsValidator } from './validators';
 import { CaslAbilityGuard } from './guards';
+import { UserService } from './services';
 
 @Global()
 @Module({
@@ -27,9 +28,10 @@ import { CaslAbilityGuard } from './guards';
     HttpModule,
     PassportModule.register({ defaultStrategy: 'jwt', session: true }),
   ],
-  exports: [MongooseModule, RabbitMQService],
+  exports: [MongooseModule, RabbitMQService, UserService],
   providers: [
     RabbitMQService,
+    UserService,
 
     ExistsValidator,
     //Strategies

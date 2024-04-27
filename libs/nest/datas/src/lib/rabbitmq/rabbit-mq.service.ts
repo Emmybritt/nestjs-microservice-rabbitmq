@@ -8,7 +8,7 @@ import { EXCHANGE, EXCHANGE_ROUTE, EXCHANGE_TYPE, MQ_QUEUE } from './constants';
 export class RabbitMQService implements OnModuleInit {
   private readonly connectionString: string;
   private connection?: Connection;
-  public channel: Channel;
+  public channel!: Channel;
   public setupComplete = false;
 
   constructor(
@@ -39,9 +39,9 @@ export class RabbitMQService implements OnModuleInit {
   protected async bindQueues() {
     return Promise.all([
       this.channel.bindQueue(
-        MQ_QUEUE.quoteInvoicePaid,
-        EXCHANGE.apiPayment,
-        EXCHANGE_ROUTE.invoicePaid
+        MQ_QUEUE.userCreated,
+        EXCHANGE.apiAuth,
+        EXCHANGE_ROUTE.userCreated
       ),
     ]);
   }

@@ -1,6 +1,12 @@
-export enum EXCHANGE {}
+export enum EXCHANGE {
+  apiAuth = 'auth',
+  apiHotel = 'hotel',
+  apiFlight = 'flight',
+}
 
-export enum EXCHANGE_ROUTE {}
+export enum EXCHANGE_ROUTE {
+  userCreated = 'user.created',
+}
 
 export enum EXCHANGE_TYPE {
   fanout = 'fanout',
@@ -9,4 +15,6 @@ export enum EXCHANGE_TYPE {
   direct = 'direct',
 }
 
-export enum MQ_QUEUE {}
+export enum MQ_QUEUE {
+  userCreated = 'user.created',
+}

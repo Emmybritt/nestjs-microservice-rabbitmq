@@ -2,13 +2,13 @@ import { Injectable, Logger, OnModuleInit, Optional } from '@nestjs/common';
 import { Channel, Connection, connect } from 'amqplib';
 import { Options } from 'amqplib/properties';
 import { ModuleConfig } from '../module.config';
-import { EXCHANGE, EXCHANGE_TYPE, MQ_QUEUE } from './constants';
+import { EXCHANGE, EXCHANGE_ROUTE, EXCHANGE_TYPE, MQ_QUEUE } from './constants';
 
 @Injectable()
 export class RabbitMQService implements OnModuleInit {
   private readonly connectionString: string;
   private connection?: Connection;
-  public channel?: Channel;
+  public channel: Channel;
   public setupComplete = false;
 
   constructor(
@@ -28,7 +28,7 @@ export class RabbitMQService implements OnModuleInit {
     content: object | string | boolean | number,
     options?: Options.Publish
   ): void {
-    this.channel?.publish(
+    this.channel.publish(
       exchange,
       routingKey,
       Buffer.from(JSON.stringify(content)),
@@ -37,7 +37,13 @@ export class RabbitMQService implements OnModuleInit {
   }
 
   protected async bindQueues() {
-    return Promise.all([]);
+    return Promise.all([
+      this.channel.bindQueue(
+        MQ_QUEUE.quoteInvoicePaid,
+        EXCHANGE.apiPayment,
+        EXCHANGE_ROUTE.invoicePaid
+      ),
+    ]);
   }
 
   private setup(): void {

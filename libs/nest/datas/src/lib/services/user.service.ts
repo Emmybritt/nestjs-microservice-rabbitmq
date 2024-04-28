@@ -143,7 +143,7 @@ export class UserService extends HelperClassService {
   ) {
     if (!ability) return filter;
     return {
-      $and: [filter, accessibleBy(ability, action).ofType('Users')],
+      $and: [filter, accessibleBy(ability, action).ofType('User')],
     };
   }
 }

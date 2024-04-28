@@ -91,7 +91,7 @@ export class UserModel implements User {
     required: false,
     trim: true,
     minlength: 8,
-    select: false,
+    // select: false,
   })
   @IsNotEmpty()
   @IsString()

@@ -1,5 +1,9 @@
 export enum RESOURCE {
-  users = 'users',
+  users = 'User',
+  hotels = 'Hotel',
+  hotelRooms = 'HotelRoom',
+  hotelReservation = 'HotelReservation',
+  roomsAvailability = 'RoomAvailability',
 }
 
 export enum USER_ROLE {
@@ -12,4 +16,8 @@ export enum USER_ROLE {
 
 export enum COLLECTIONS {
   users = 'users',
+  hotels = 'hotels',
+  hotelRooms = 'hotel-rooms',
+  hotelReservations = 'hotel-reservations',
+  roomAvailability = 'room-availability',
 }

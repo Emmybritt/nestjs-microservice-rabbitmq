@@ -14,10 +14,12 @@ export class AuthService extends HelperClassService {
     if (!user) {
       throw new ForbiddenException('Incorrect email or password');
     }
+
     const passwordMatch = await this.compareHashedData(
       loginUser.password,
       user.password
     );
+
     if (!passwordMatch) {
       throw new ForbiddenException('Incorrect email or password');
     }

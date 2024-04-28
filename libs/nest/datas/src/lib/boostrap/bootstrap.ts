@@ -110,7 +110,11 @@ export async function bootstrapNestApp<T>(
   const port = environment.port;
   const allowedOrigins = [environment.basePath];
   if (!environment.production) {
-    allowedOrigins.push();
+    allowedOrigins.push(
+      'http://localhost:4200',
+      `http://localhost:${environment.port}`,
+      `http://127.0.0.1:${environment.port}`
+    );
   }
   app.enableCors({
     credentials: true,

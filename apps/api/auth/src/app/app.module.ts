@@ -5,6 +5,7 @@ import { LogsMiddleware, NestDataModule } from '@travel-booking-platform/nest';
 import { environment } from '../environments/environment';
 import { JobsModule } from './jobs/jobs.module';
 import { AuthService } from './services/auth.service';
+import { AuthController } from './controller/auth.controller';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { AuthService } from './services/auth.service';
     MongooseModule.forRoot(environment.databaseURI),
     NestDataModule.forRoot(environment),
   ],
-  controllers: [],
+  controllers: [AuthController],
   providers: [AuthService],
 })
 export class AppModule {

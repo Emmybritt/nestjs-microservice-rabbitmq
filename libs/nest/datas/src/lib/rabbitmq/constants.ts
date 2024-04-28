@@ -6,6 +6,7 @@ export enum EXCHANGE {
 
 export enum EXCHANGE_ROUTE {
   userCreated = 'user.created',
+  userDisabled = 'user.disabled',
 }
 
 export enum EXCHANGE_TYPE {

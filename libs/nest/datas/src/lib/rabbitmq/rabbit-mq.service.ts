@@ -8,14 +8,15 @@ import { EXCHANGE, EXCHANGE_ROUTE, EXCHANGE_TYPE, MQ_QUEUE } from './constants';
 export class RabbitMQService implements OnModuleInit {
   private readonly connectionString: string;
   private connection?: Connection;
-  public channel!: Channel;
+  public channel: Channel;
   public setupComplete = false;
 
   constructor(
     @Optional()
-    config?: ModuleConfig
+    config: ModuleConfig
   ) {
-    this.connectionString = config?.rabbitMQ ?? '';
+    if (config) this.connectionString = config.rabbitMQ;
+    this.setupComplete = false;
   }
 
   onModuleInit(): void {

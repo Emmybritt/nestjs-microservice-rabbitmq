@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {
-  EXCHANGE, 
+  EXCHANGE,
   EXCHANGE_ROUTE,
   RabbitMQService,
 } from '@travel-booking-platform/nest';

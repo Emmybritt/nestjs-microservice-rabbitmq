@@ -14,16 +14,20 @@ import { RabbitMQService } from './rabbitmq';
 
 import { RedisClientOptions } from 'redis';
 
+import { COLLECTIONS } from '@travel-booking-platform/types';
 import { Environment } from './boostrap';
+import { CaslAbilityGuard } from './guards';
+import { UserSchema } from './schemas/user.schema';
+import { UserService } from './services';
 import { JwtStrategy, SessionSerializer } from './strategies';
 import { ExistsValidator } from './validators';
-import { CaslAbilityGuard } from './guards';
-import { UserService } from './services';
 
 @Global()
 @Module({
   imports: [
-    MongooseModule.forFeature([]),
+    MongooseModule.forFeature([
+      { name: COLLECTIONS.users, schema: UserSchema },
+    ]),
     HealthModule,
     HttpModule,
     PassportModule.register({ defaultStrategy: 'jwt', session: true }),

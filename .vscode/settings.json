@@ -1,0 +1,7 @@
+{
+  "cSpell.words": ["antd", "Hoverable", "istoday", "nestjs"],
+  "circleci-vscode.apiToken": "4bddeb62278b1bf5f8435e48c1cadb35193229b5",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "githubPullRequests.ignoredPullRequestBranches": ["main"],
+  "vsicons.presets.nestjs": true
+}

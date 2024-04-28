@@ -26,6 +26,7 @@ import * as session from 'express-session';
 import { Redis, RedisOptions } from 'ioredis';
 import * as passport from 'passport';
 import { mw as RequestIp } from 'request-ip';
+import { AbilitiesMiddleware } from '../middlewares/abilities.middleware';
 
 export interface Environment {
   production: boolean;
@@ -70,22 +71,21 @@ export async function bootstrapNestApp<T>(
       ttl: 60 * 60 * 24 * 180, // 180 days
     });
 
-    console.log(environment.sessionSecret, 'secrentre');
-
     if (environment.sessionSecret) {
-      // app.use(cookieParser());
-      // app.use(
-      //   session({
-      //     secret: environment.sessionSecret,
-      //     resave: false,
-      //     saveUninitialized: false,
-      //     store: store,
-      //     cookie: { secure: false }, // Set secure to true if you are using HTTPS
-      //   })
-      // );
+      app.use(cookieParser());
+      app.use(
+        session({
+          secret: environment.sessionSecret,
+          resave: false,
+          saveUninitialized: false,
+          store: store,
+          cookie: { secure: false }, // Set secure to true if you are using HTTPS
+        })
+      );
     }
-    // app.use(passport.session());
+    app.use(passport.session());
   }
+  app.use(AbilitiesMiddleware);
   app.use(RequestIp());
 
   addValidatitors(app);
@@ -116,7 +116,7 @@ export async function bootstrapNestApp<T>(
     credentials: true,
     origin: allowedOrigins,
   });
-  // app.use(compression());
+  app.use(compression());
   // await app.register(helmet);
 
   await app.listen(port, '0.0.0.0', async () => {

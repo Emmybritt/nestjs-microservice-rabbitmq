@@ -1,5 +1,8 @@
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
-import { FindManyDto } from '@travel-booking-platform/nest';
+import {
+  FindManyDto,
+  PaginatedResponseDto,
+} from '@travel-booking-platform/nest';
 import { Transform } from 'class-transformer';
 import { IsMongoId, IsOptional, IsString } from 'class-validator';
 import { Types } from 'mongoose';
@@ -13,6 +16,11 @@ export class CreateHotelDto
 export class UpdateHotelDto
   extends PartialType(CreateHotelDto)
   implements UpdateHotel {}
+
+export class HotelResponseDto extends PaginatedResponseDto<HotelModel> {
+  @ApiProperty({ type: [HotelModel] })
+  docs: HotelModel[];
+}
 
 export class FindManyHotelDto extends FindManyDto implements FindManyHotel {
   @IsOptional()

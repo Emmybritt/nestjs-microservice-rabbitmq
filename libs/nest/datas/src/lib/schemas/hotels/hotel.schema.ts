@@ -10,6 +10,7 @@ import { Exclude, Transform } from 'class-transformer';
 import { IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Types } from 'mongoose';
 import * as mongoosePaginate from 'mongoose-paginate-v2';
+import { AddressModel, AddressSchema } from '../address.schema';
 
 @Schema({ collection: COLLECTIONS.hotels, timestamps: true })
 export class HotelModel implements Hotel {
@@ -45,11 +46,11 @@ export class HotelModel implements Hotel {
   @ApiProperty({ type: String, example: 'Marriot Hotel' })
   name: string;
 
-  // @Prop({ type: AddressSchema, required: false })
-  // @IsOptional()
+  @Prop({ type: AddressSchema, required: false })
+  @IsOptional()
   // @ValidateNested()
   // @Type(() => AddressModel)
-  // @ApiProperty({ type: AddressModel })
+  @ApiProperty({ type: AddressModel })
   address: Address;
 
   @ApiProperty({ type: Date })

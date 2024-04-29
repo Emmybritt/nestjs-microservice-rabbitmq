@@ -24,6 +24,7 @@ export class AuthService extends HelperClassService {
       throw new ForbiddenException('Incorrect email or password');
     }
     const token = await this.generateTokens(user);
+    console.log(token, 'This is the token');
     return this.userService
       .update({ email: user.email }, { refreshToken: token.refreshToken })
       .then((user) => {

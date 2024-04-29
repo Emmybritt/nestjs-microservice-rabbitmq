@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   name: 'Auth Service',
   version: '1.0.0',
-  basePath: process.env.BASE_PATH,
+  basePath: process.env.BASE_PATH || 'http://localhost:3000',
   port: +process.env.NODE_PORT || 3000,
   bearerAuth: true,
   rabbitMQ: process.env.RABBIT_MQ_URL,

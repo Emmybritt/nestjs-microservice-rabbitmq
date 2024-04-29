@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   name: 'Flight Booking Service',
   version: '1.0.0',
-  basePath: process.env.BASE_PATH,
+  basePath: process.env.BASE_PATH || 'http://localhost:3001',
   port: +process.env.NODE_PORT || 3001,
   bearerAuth: true,
   rabbitMQ: process.env.RABBIT_MQ_URL,

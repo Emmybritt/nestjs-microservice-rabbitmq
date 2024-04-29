@@ -12,3 +12,4 @@ export * from './services';
 export * from './strategies';
 export * from './validators';
 export * from './dto';
+export * from './schemas';

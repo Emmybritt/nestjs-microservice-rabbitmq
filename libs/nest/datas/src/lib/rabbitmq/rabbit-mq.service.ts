@@ -44,6 +44,11 @@ export class RabbitMQService implements OnModuleInit {
         EXCHANGE.apiAuth,
         EXCHANGE_ROUTE.userCreated
       ),
+      this.channel.bindQueue(
+        MQ_QUEUE.hotelRoomReservationCreated,
+        EXCHANGE.apiHotel,
+        EXCHANGE_ROUTE.hotelRoomReservationCreated
+      ),
     ]);
   }
 

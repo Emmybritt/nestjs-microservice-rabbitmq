@@ -82,7 +82,9 @@ export class UserModel implements User {
   @IsOptional()
   disabledAt: string | Date;
 
+  @Prop({ type: Boolean, default: false })
   @ApiProperty({ type: Boolean, default: false })
+  @IsBoolean()
   @IsOptional()
   disabled: boolean;
 

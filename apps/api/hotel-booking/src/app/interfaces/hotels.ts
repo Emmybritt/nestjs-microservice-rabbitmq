@@ -3,6 +3,7 @@ import { Address, FindMany, RESOURCE } from '@travel-booking-platform/types';
 export interface Hotel {
   _id: string;
   resourceType: RESOURCE.hotels;
+  creator: string;
   name: string;
   address: Address;
   createdAt: string | Date;

@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   name: 'Hotel Booking Service',
   version: '1.0.0',
-  basePath: process.env.BASE_PATH,
+  basePath: process.env.BASE_PATH || 'http://localhost:3002',
   port: +process.env.NODE_PORT || 3002,
   bearerAuth: true,
   rabbitMQ: process.env.RABBIT_MQ_URL,

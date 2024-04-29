@@ -7,6 +7,13 @@ export enum EXCHANGE {
 export enum EXCHANGE_ROUTE {
   userCreated = 'user.created',
   userDisabled = 'user.disabled',
+  hotelDeleted = 'hotel.deleted',
+  hotelCreated = 'hotel.created',
+  hotelRoomCreated = 'hotel.room.created',
+  hotelRoomDeleted = 'hotel.room.deleted',
+  hotelRoomUpdated = 'hotel.room.updated',
+  hotelRoomReservationDeleted = 'hotel.room.reservation.deleted',
+  hotelRoomReservationCreated = 'hotel.room.reservation.created',
 }
 
 export enum EXCHANGE_TYPE {
@@ -18,4 +25,5 @@ export enum EXCHANGE_TYPE {
 
 export enum MQ_QUEUE {
   userCreated = 'user.created',
+  hotelRoomReservationCreated = 'hotel-room.reservation.created',
 }

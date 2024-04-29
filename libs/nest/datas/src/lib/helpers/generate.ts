@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { JwtService, JwtSignOptions } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { AuthUser } from '@travel-booking-platform/types';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class HelperClassService {
   private readonly jwtService: JwtService = new JwtService();
+  private configService: ConfigService;
 
   async hashData(data: string) {
     const hash = await bcrypt.hash(data, 10);
@@ -29,12 +31,12 @@ export class HelperClassService {
       disabledAt: user.disabledAt,
     };
     const token = await this.jwtService.signAsync(tokenPayload, {
-      expiresIn: process.env['ACCESS_TOKEN_EXPIRY'],
-      secret: process.env['JWT_SECRET_KEY'],
+      expiresIn: `${process.env.JWT_SECRET}`,
+      secret: process.env.JWT_SECRET_KEY,
     });
     const refreshToken = await this.jwtService.signAsync(tokenPayload, {
-      expiresIn: process.env['REFRESH_TOKEN_EXPIRY'],
-      secret: process.env['REFRESH_TOKEN_KEY'],
+      expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+      secret: process.env.REFRESH_TOKEN_KEY,
     });
     return {
       accessToken: token,

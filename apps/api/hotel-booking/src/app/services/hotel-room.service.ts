@@ -14,15 +14,13 @@ import {
   AppAction,
   ApplicationAction,
   COLLECTIONS,
+  CreateHotelRoom,
+  FindManyHotelRoom,
   FindOne,
+  HotelRoom,
   RESOURCE,
 } from '@travel-booking-platform/types';
 import { FilterQuery, PaginateModel, PaginateResult, Types } from 'mongoose';
-import {
-  CreateHotelRoom,
-  FindManyHotelRoom,
-  HotelRoom,
-} from '../interfaces/hotel-room';
 import { HotelRoomDocument } from '../schemas/hotel-room.schema';
 import { HotelService } from './hotel.service';
 

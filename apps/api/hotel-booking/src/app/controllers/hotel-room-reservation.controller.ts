@@ -20,17 +20,20 @@ import {
 import {
   Ability,
   CaslAction,
+  CreateHotelRoomReservationDto,
   FindOneDto,
+  HotelRoomReservationResponseDto,
   Public,
   SessionUser,
-} from '@travel-booking-platform/nest';
-import { Action, AuthUser, RESOURCE } from '@travel-booking-platform/types';
-import {
-  CreateHotelRoomReservationDto,
-  HotelRoomReservationResponseDto,
   UpdateHotelRoomReservationDto,
-} from '../dtos/hotel-room-reservation.dto';
-import { FindManyHotelRoomReservations } from '../interfaces/hotel-room-reservation';
+} from '@travel-booking-platform/nest';
+import {
+  Action,
+  AuthUser,
+  FindManyHotelRoomReservations,
+  RESOURCE,
+} from '@travel-booking-platform/types';
+
 import { HotelRoomReservationModel } from '../schemas/hotel-room-reservation.schema';
 import { HotelRoomReservationService } from '../services/hotel-room-reservation.service';
 

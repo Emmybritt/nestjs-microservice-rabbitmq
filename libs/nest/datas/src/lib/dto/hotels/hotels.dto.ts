@@ -1,13 +1,15 @@
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import {
-  FindManyDto,
-  PaginatedResponseDto,
-} from '@travel-booking-platform/nest';
+  CreateHotel,
+  UpdateHotel,
+  FindManyHotel,
+} from '@travel-booking-platform/types';
+
 import { Transform } from 'class-transformer';
 import { IsMongoId, IsOptional, IsString } from 'class-validator';
 import { Types } from 'mongoose';
-import { CreateHotel, FindManyHotel, UpdateHotel } from '../interfaces/hotels';
-import { HotelModel } from '../schemas/hotel.schema';
+import { HotelModel } from '../../schemas';
+import { PaginatedResponseDto, FindManyDto } from '../misc';
 
 export class CreateHotelDto
   extends OmitType(HotelModel, [

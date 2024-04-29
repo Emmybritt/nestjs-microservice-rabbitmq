@@ -1,4 +1,5 @@
-import { FindMany, RESOURCE } from '@travel-booking-platform/types';
+import { RESOURCE } from '../generic';
+import { FindMany } from '../query-params';
 
 export interface HotelRoomReservation {
   _id: string;

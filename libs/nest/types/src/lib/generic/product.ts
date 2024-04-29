@@ -3,7 +3,6 @@ export enum RESOURCE {
   hotels = 'Hotel',
   hotelRoom = 'HotelRoom',
   hotelRoomReservation = 'HotelRoomReservation',
-  roomsAvailability = 'RoomAvailability',
 }
 
 export enum USER_ROLE {

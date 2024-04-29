@@ -1,11 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  ROOM_TYPE,
-  COLLECTIONS,
-  HotelRoom,
-  RESOURCE,
-} from '@travel-booking-platform/types';
+import { COLLECTIONS, RESOURCE } from '@travel-booking-platform/types';
 import { Exclude, Transform } from 'class-transformer';
 import {
   IsBoolean,
@@ -17,6 +12,7 @@ import {
 } from 'class-validator';
 import { Document, Types } from 'mongoose';
 import * as mongoosePaginate from 'mongoose-paginate-v2';
+import { HotelRoom, ROOM_TYPE } from '../interfaces/hotel-room';
 
 @Schema({ collection: COLLECTIONS.hotelRooms, timestamps: true })
 export class HotelRoomModel implements HotelRoom {

@@ -20,17 +20,16 @@ import { HotelRoomService } from '../services/hotel-room.service';
 import {
   Ability,
   CaslAction,
-  FindOneDto,
-  Public,
-  SessionUser,
-} from '@travel-booking-platform/nest';
-import { Action, AuthUser, RESOURCE } from '@travel-booking-platform/types';
-import {
   CreateHotelRoomDto,
   FindManyHotelRoomDto,
+  FindOneDto,
   HotelRoomResponseDto,
+  Public,
+  SessionUser,
   UpdateHotelRoomDto,
-} from '../dtos/hotel-room.dto';
+} from '@travel-booking-platform/nest';
+import { Action, AuthUser, RESOURCE } from '@travel-booking-platform/types';
+
 import { HotelRoomModel } from '../schemas/hotel-room.schema';
 import { AnyMongoAbility } from '@casl/ability';
 

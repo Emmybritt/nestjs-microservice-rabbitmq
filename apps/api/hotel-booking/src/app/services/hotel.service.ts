@@ -5,11 +5,13 @@ import {
   AppAction,
   ApplicationAction,
   COLLECTIONS,
+  CreateHotel,
+  FindManyHotel,
   FindOne,
+  Hotel,
   RESOURCE,
 } from '@travel-booking-platform/types';
 import { FilterQuery, PaginateModel, PaginateResult, Types } from 'mongoose';
-import { CreateHotel, FindManyHotel, Hotel } from '../interfaces/hotels';
 import { HotelDocument } from '../schemas/hotel.schema';
 import { AnyMongoAbility } from '@casl/ability';
 import {

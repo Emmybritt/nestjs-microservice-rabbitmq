@@ -1,10 +1,10 @@
 import { ApiProperty, OmitType, PartialType, PickType } from '@nestjs/swagger';
+import { HotelRoomReservationModel } from '../../schemas';
 import {
   CreateRoomHotelReservation,
   UpdateHotelReservation,
-} from '../interfaces/hotel-room-reservation';
-import { HotelRoomReservationModel } from '../schemas/hotel-room-reservation.schema';
-import { PaginatedResponseDto } from '@travel-booking-platform/nest';
+} from '@travel-booking-platform/types';
+import { PaginatedResponseDto } from '../misc';
 
 export class CreateHotelRoomReservationDto
   extends PickType(HotelRoomReservationModel, [

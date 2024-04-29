@@ -20,18 +20,17 @@ import { HotelService } from '../services/hotel.service';
 import {
   Ability,
   CaslAction,
+  CreateHotelDto,
+  FindManyHotelDto,
   FindOneDto,
+  HotelResponseDto,
   Public,
   SessionUser,
+  UpdateHotelDto,
 } from '@travel-booking-platform/nest';
 import { Action, AuthUser, RESOURCE } from '@travel-booking-platform/types';
 import { HotelModel } from '../schemas/hotel.schema';
-import {
-  CreateHotelDto,
-  FindManyHotelDto,
-  HotelResponseDto,
-  UpdateHotelDto,
-} from '../dtos/hotels.dto';
+
 import { AnyMongoAbility } from '@casl/ability';
 
 @ApiTags('Hotel')

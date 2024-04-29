@@ -22,6 +22,7 @@ import { UserSchema } from './schemas/user.schema';
 import { UserService } from './services';
 import { JwtStrategy, SessionSerializer } from './strategies';
 import { ExistsValidator } from './validators';
+import { AbilityFactory } from './abilities';
 
 @Global()
 @Module({
@@ -34,10 +35,11 @@ import { ExistsValidator } from './validators';
     HttpModule,
     PassportModule.register({ defaultStrategy: 'jwt', session: true }),
   ],
-  exports: [MongooseModule, RabbitMQService, UserService],
+  exports: [MongooseModule, RabbitMQService, UserService, AbilityFactory],
   providers: [
     RabbitMQService,
     UserService,
+    AbilityFactory,
 
     ExistsValidator,
     //Strategies

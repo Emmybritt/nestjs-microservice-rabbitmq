@@ -9,6 +9,7 @@ export enum EXCHANGE_ROUTE {
   userDisabled = 'user.disabled',
   hotelDeleted = 'hotel.deleted',
   hotelCreated = 'hotel.created',
+  hotelUpdated = 'hotel.updated',
   hotelRoomCreated = 'hotel.room.created',
   hotelRoomDeleted = 'hotel.room.deleted',
   hotelRoomUpdated = 'hotel.room.updated',

@@ -6,11 +6,12 @@ import { CreateUser, LoginUser } from '@travel-booking-platform/types';
 export class AuthService extends HelperClassService {
   private logger = new Logger(AuthService.name);
   constructor(private userService: UserService) {
-    super();
+    super(process.env.JWT_SECRET, '7m', process.env.REFRESH_SECRET, '5d');
   }
 
   async login(loginUser: LoginUser) {
     const user = await this.userService.findOne({ email: loginUser.email });
+    console.log(process.env.JWT_TOKEN);
     if (!user) {
       throw new ForbiddenException('Incorrect email or password');
     }

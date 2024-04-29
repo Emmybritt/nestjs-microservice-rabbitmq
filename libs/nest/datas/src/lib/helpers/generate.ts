@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import { AuthUser } from '@travel-booking-platform/types';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class HelperClassService {
   private readonly jwtService: JwtService = new JwtService();
-  private configService: ConfigService;
+  constructor(
+    private jwtSecrete: string,
+    private jwtExp: string,
+    private refreshTokenSecrete: string,
+    private refreshTokenExp: string
+  ) {}
 
   async hashData(data: string) {
     const hash = await bcrypt.hash(data, 10);
@@ -30,13 +34,14 @@ export class HelperClassService {
       disabled: user.disabled,
       disabledAt: user.disabledAt,
     };
+    console.log(this.jwtSecrete, 'jwt secrete');
     const token = await this.jwtService.signAsync(tokenPayload, {
-      expiresIn: `${process.env.JWT_SECRET}`,
-      secret: process.env.JWT_SECRET_KEY,
+      expiresIn: this.jwtExp,
+      secret: this.jwtSecrete,
     });
     const refreshToken = await this.jwtService.signAsync(tokenPayload, {
-      expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
-      secret: process.env.REFRESH_TOKEN_KEY,
+      expiresIn: this.refreshTokenExp,
+      secret: this.refreshTokenSecrete,
     });
     return {
       accessToken: token,
@@ -48,19 +53,19 @@ export class HelperClassService {
     return this.jwtService.decode(refreshToken) as AuthUser;
   }
 
-  // async verifyJwt(token: string, type: 'refresh' | 'access') {
-  //   await this.jwtService.verifyAsync(token, this.getTokenOptions(type));
-  // }
+  async verifyJwt(token: string, type: 'refresh' | 'access') {
+    await this.jwtService.verifyAsync(token, this.getTokenOptions(type));
+  }
 
-  // private getTokenOptions(type: 'refresh' | 'access') {
-  //   const options: JwtSignOptions = {};
-  //   if (type === 'access') {
-  //     options.secret = process.env['JWT_SECRET'];
-  //     options.expiresIn = process.env['ACCESS_TOKEN_EXPIRY'];
-  //   } else {
-  //     options.secret = process.env['REFRESH_TOKEN_KEY'];
-  //     options.expiresIn = process.env['REFRESH_TOKEN_EXPIRY'];
-  //   }
-  //   return options;
-  // }
+  private getTokenOptions(type: 'refresh' | 'access') {
+    const options: JwtSignOptions = {};
+    if (type === 'access') {
+      options.secret = this.jwtSecrete;
+      options.expiresIn = this.jwtExp;
+    } else {
+      options.secret = this.refreshTokenSecrete;
+      options.expiresIn = this.refreshTokenExp;
+    }
+    return options;
+  }
 }

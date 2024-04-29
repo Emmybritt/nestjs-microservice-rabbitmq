@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {
   Action,
@@ -71,6 +71,40 @@ export class HotelService {
       this.getFindManyFilters(query, ability),
       query
     );
+  }
+
+  async updateOne(
+    filter: FilterQuery<Hotel>,
+    hotel: Partial<Hotel>,
+    ability: AnyMongoAbility,
+    option: {
+      populate?: string | string[];
+      publish?: boolean;
+      lean?: boolean;
+    } = { publish: true }
+  ) {
+    const query = this.getAbilityFilters(filter, AppAction.update, ability);
+    return this.hotelModel
+      .findOneAndUpdate(query, hotel, {
+        runValidators: true,
+        new: true,
+        lean: true,
+        ...option,
+      })
+      .exec()
+      .then((newHotel) => {
+        if (!newHotel) {
+          throw new NotFoundException('Hotel not found');
+        }
+        if (option.publish) {
+          this.rabbitMQ.publish(
+            EXCHANGE.apiHotel,
+            EXCHANGE_ROUTE.hotelUpdated,
+            { hotel: newHotel }
+          );
+        }
+        return newHotel;
+      });
   }
 
   getFindManyFilters(query: FindManyHotel, ability?: AnyMongoAbility) {

@@ -14,6 +14,7 @@ import { RabbitMQService } from './rabbitmq';
 
 import { RedisClientOptions } from 'redis';
 
+import { ConfigModule } from '@nestjs/config';
 import { COLLECTIONS } from '@travel-booking-platform/types';
 import { Environment } from './boostrap';
 import { CaslAbilityGuard } from './guards';
@@ -29,6 +30,7 @@ import { ExistsValidator } from './validators';
       { name: COLLECTIONS.users, schema: UserSchema },
     ]),
     HealthModule,
+    ConfigModule.forRoot(),
     HttpModule,
     PassportModule.register({ defaultStrategy: 'jwt', session: true }),
   ],

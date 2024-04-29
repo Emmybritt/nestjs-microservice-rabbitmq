@@ -11,18 +11,15 @@ import {
   FindOne,
   User,
 } from '@travel-booking-platform/types';
+import * as bcrypt from 'bcrypt';
 import { FilterQuery, PaginateModel, Types } from 'mongoose';
 import { UserCreatedEvent } from '../events';
-import {
-  HelperClassService,
-  findManyWrapper,
-  findOneWrapper,
-} from '../helpers';
+import { findManyWrapper, findOneWrapper } from '../helpers';
 import { EXCHANGE, EXCHANGE_ROUTE, RabbitMQService } from '../rabbitmq';
 import { UserDocument } from '../schemas/user.schema';
 
 @Injectable()
-export class UserService extends HelperClassService {
+export class UserService {
   private logger = new Logger(UserService.name);
 
   constructor(
@@ -30,9 +27,7 @@ export class UserService extends HelperClassService {
     @InjectModel(COLLECTIONS.users)
     private userModel: PaginateModel<UserDocument>,
     private rabbitMq: RabbitMQService
-  ) {
-    super();
-  }
+  ) {}
 
   async create(createUser: CreateUser): Promise<User> {
     const password = await this.hashData(createUser.password);
@@ -134,6 +129,11 @@ export class UserService extends HelperClassService {
         ...option,
       })
       .exec();
+  }
+
+  async hashData(data: string) {
+    const hash = await bcrypt.hash(data, 10);
+    return hash;
   }
 
   private getAbilityFilters(

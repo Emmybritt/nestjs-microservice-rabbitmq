@@ -6,6 +6,7 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
@@ -16,13 +17,19 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { HotelService } from '../services/hotel.service';
-import { Ability, CaslAction, Public } from '@travel-booking-platform/nest';
+import {
+  Ability,
+  CaslAction,
+  FindOneDto,
+  Public,
+} from '@travel-booking-platform/nest';
 import { Action, RESOURCE } from '@travel-booking-platform/types';
 import { HotelModel } from '../schemas/hotel.schema';
 import {
   CreateHotelDto,
   FindManyHotelDto,
   HotelResponseDto,
+  UpdateHotelDto,
 } from '../dtos/hotels.dto';
 import { AnyMongoAbility } from '@casl/ability';
 
@@ -37,6 +44,27 @@ export class HotelController {
   @ApiCreatedResponse({ type: HotelModel })
   create(@Body() hotel: CreateHotelDto) {
     return this.hotelService.create(hotel);
+  }
+
+  @Get(':id')
+  @CaslAction(Action.view, RESOURCE.hotels)
+  @ApiOkResponse({ type: HotelModel })
+  findOne(
+    @Param('id') _id: string,
+    @Ability() ability: AnyMongoAbility,
+    @Query() query: FindOneDto
+  ) {
+    return this.hotelService.findOne({ _id }, query, ability);
+  }
+
+  @Patch(':id')
+  @CaslAction(Action.update, RESOURCE.hotels)
+  async updateHotel(
+    @Param('id') _id: string,
+    @Body() hotel: UpdateHotelDto,
+    @Ability() ability: AnyMongoAbility
+  ) {
+    return this.hotelService.updateOne({ _id }, hotel, ability);
   }
 
   @Get()

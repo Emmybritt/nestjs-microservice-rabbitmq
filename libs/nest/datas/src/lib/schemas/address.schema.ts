@@ -2,9 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { Address } from '@travel-booking-platform/types';
 import { IsOptional, IsPostalCode, IsString } from 'class-validator';
-import { Document } from 'mongoose';
 
-@Schema({ timestamps: false })
+@Schema({ timestamps: false, _id: false })
 export class AddressModel implements Address {
   @Prop({ type: String, required: false, trim: true })
   @IsString()
@@ -38,5 +37,4 @@ export class AddressModel implements Address {
   zipcode?: string | undefined;
 }
 
-export type AddressDocument = AddressModel & Document;
 export const AddressSchema = SchemaFactory.createForClass(AddressModel);

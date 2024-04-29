@@ -2,7 +2,7 @@ import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { MQ_QUEUE, RabbitMQService } from '@travel-booking-platform/nest';
 import { Channel } from 'amqplib';
 import { HotelRoomService } from '../services/hotel-room.service';
-import { HotelRoomReservation } from '../interfaces/hotel-room-reservation';
+import { HotelRoomReservation } from '@travel-booking-platform/types';
 
 @Injectable()
 export class RoomReservationJob implements OnModuleInit {

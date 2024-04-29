@@ -1,18 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { AddressModel, AddressSchema } from '@travel-booking-platform/nest';
-import { Address, COLLECTIONS, RESOURCE } from '@travel-booking-platform/types';
-import { Exclude, Transform, Type } from 'class-transformer';
 import {
-  IsMongoId,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
+  Address,
+  COLLECTIONS,
+  Hotel,
+  RESOURCE,
+} from '@travel-booking-platform/types';
+import { Exclude, Transform } from 'class-transformer';
+import { IsMongoId, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { Types } from 'mongoose';
 import * as mongoosePaginate from 'mongoose-paginate-v2';
-import { Hotel } from '../interfaces/hotels';
 
 @Schema({ collection: COLLECTIONS.hotels, timestamps: true })
 export class HotelModel implements Hotel {
@@ -48,11 +45,11 @@ export class HotelModel implements Hotel {
   @ApiProperty({ type: String, example: 'Marriot Hotel' })
   name: string;
 
-  @Prop({ type: AddressSchema, required: false })
-  @IsOptional()
-  @ValidateNested()
-  @Type(() => AddressModel)
-  @ApiProperty({ type: AddressModel })
+  // @Prop({ type: AddressSchema, required: false })
+  // @IsOptional()
+  // @ValidateNested()
+  // @Type(() => AddressModel)
+  // @ApiProperty({ type: AddressModel })
   address: Address;
 
   @ApiProperty({ type: Date })

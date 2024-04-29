@@ -1,6 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HotelRoomReservation } from '../interfaces/hotel-room-reservation';
-import { COLLECTIONS, RESOURCE } from '@travel-booking-platform/types';
+import {
+  COLLECTIONS,
+  HotelRoomReservation,
+  RESOURCE,
+} from '@travel-booking-platform/types';
 import { Exclude, Transform } from 'class-transformer';
 import { Document, Types } from 'mongoose';
 import * as mongoosePaginate from 'mongoose-paginate-v2';

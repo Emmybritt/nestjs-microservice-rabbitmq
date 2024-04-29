@@ -4,13 +4,14 @@ import { IsIn, IsMongoId, IsOptional, IsString } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { Types } from 'mongoose';
 import { HotelRoomModel } from '../../schemas';
+
+import { PaginatedResponseDto, FindManyDto } from '../misc';
 import {
   CreateHotelRoom,
   FindManyHotelRoom,
   ROOM_TYPE,
   UpdateHotelRoom,
 } from '@travel-booking-platform/types';
-import { PaginatedResponseDto, FindManyDto } from '../misc';
 
 export class CreateHotelRoomDto
   extends OmitType(HotelRoomModel, [

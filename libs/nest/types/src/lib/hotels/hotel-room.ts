@@ -1,9 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { FindManyDto } from '@travel-booking-platform/nest';
-import { RESOURCE } from '@travel-booking-platform/types';
-import { Transform } from 'class-transformer';
-import { IsIn, IsMongoId, IsOptional } from 'class-validator';
-import { Types } from 'mongoose';
+import { RESOURCE } from '../generic';
+import { FindMany } from '../query-params';
 
 export enum ROOM_TYPE {
   single = 'SINGLE',
@@ -30,25 +26,8 @@ export type CreateHotelRoom = Omit<
 
 export type UpdateHotelRoom = Partial<CreateHotelRoom>;
 
-export class FindManyHotelRoom
-  extends FindManyDto
-  implements FindManyHotelRoom
-{
-  @IsOptional()
-  @Transform((v) => (typeof v.value === 'string' ? [v.value] : v.value))
-  @IsMongoId({ each: true })
-  @ApiProperty({ type: [Types.ObjectId], example: [new Types.ObjectId()] })
+export interface FindManyHotelRoom extends FindMany {
   _id: string[];
-
-  @IsOptional()
-  @Transform((v) => (typeof v.value === 'string' ? [v.value] : v.value))
-  @IsMongoId({ each: true })
-  @ApiProperty({ type: [Types.ObjectId], example: [new Types.ObjectId()] })
   hotel: string[];
-
-  @IsOptional()
-  @Transform((v) => (typeof v.value === 'string' ? [v.value] : v.value))
-  @IsIn(Object.values(ROOM_TYPE))
-  @ApiProperty({ type: [String], example: [ROOM_TYPE.double] })
   room_type: ROOM_TYPE[];
 }

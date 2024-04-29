@@ -10,7 +10,13 @@ import { CreateHotel, FindManyHotel, UpdateHotel } from '../interfaces/hotels';
 import { HotelModel } from '../schemas/hotel.schema';
 
 export class CreateHotelDto
-  extends OmitType(HotelModel, ['_id', '__v', 'resourceType', 'updatedAt'])
+  extends OmitType(HotelModel, [
+    '_id',
+    '__v',
+    'resourceType',
+    'updatedAt',
+    'creator',
+  ])
   implements CreateHotel {}
 
 export class UpdateHotelDto

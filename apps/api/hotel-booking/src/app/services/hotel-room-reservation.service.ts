@@ -64,6 +64,36 @@ export class HotelRoomReservationService {
       });
   }
 
+  async update(
+    filter: FilterQuery<HotelRoomReservation>,
+    hotelRoomReservation: Partial<HotelRoomReservation>,
+    ability?: AnyMongoAbility,
+    option: {
+      populate?: string | string[];
+      publish?: boolean;
+      lean?: boolean;
+    } = { publish: true }
+  ): Promise<HotelRoomReservation> {
+    const query = this.getAbilityFilters(filter, AppAction.update, ability);
+    return this.hotelRoomReservationModel
+      .findOneAndUpdate(query, hotelRoomReservation, {
+        runValidators: true,
+        lean: true,
+        new: true,
+        ...option,
+      })
+      .then((reservations) => {
+        this.rabbitMQ.publish(
+          EXCHANGE.apiHotel,
+          EXCHANGE_ROUTE.hotelRoomReservationUpdated,
+          {
+            reservations,
+          }
+        );
+        return reservations;
+      });
+  }
+
   async delete(_id: string, ability: AnyMongoAbility) {
     const query = this.getAbilityFilters({ _id }, AppAction.delete, ability);
     return this.hotelRoomReservationModel

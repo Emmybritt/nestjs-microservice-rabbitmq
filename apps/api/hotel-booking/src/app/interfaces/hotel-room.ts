@@ -25,7 +25,7 @@ export interface HotelRoom {
 
 export type CreateHotelRoom = Omit<
   HotelRoom,
-  '_id' | 'resourceType' | 'createdAt' | 'updatedAt'
+  '_id' | 'resourceType' | 'createdAt' | 'updatedAt' | 'creator'
 >;
 
 export type UpdateHotelRoom = Partial<CreateHotelRoom>;

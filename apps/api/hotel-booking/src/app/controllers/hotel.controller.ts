@@ -22,8 +22,9 @@ import {
   CaslAction,
   FindOneDto,
   Public,
+  SessionUser,
 } from '@travel-booking-platform/nest';
-import { Action, RESOURCE } from '@travel-booking-platform/types';
+import { Action, AuthUser, RESOURCE } from '@travel-booking-platform/types';
 import { HotelModel } from '../schemas/hotel.schema';
 import {
   CreateHotelDto,
@@ -42,8 +43,8 @@ export class HotelController {
   @Post()
   @CaslAction(Action.create, RESOURCE.hotels)
   @ApiCreatedResponse({ type: HotelModel })
-  create(@Body() hotel: CreateHotelDto) {
-    return this.hotelService.create(hotel);
+  create(@Body() hotel: CreateHotelDto, @SessionUser() user: AuthUser) {
+    return this.hotelService.create({ ...hotel, creator: user._id });
   }
 
   @Get(':id')

@@ -6,18 +6,32 @@ import {
   ROOM_TYPE,
   UpdateHotelRoom,
 } from '../interfaces/hotel-room';
-import { FindManyDto } from '@travel-booking-platform/nest';
+import {
+  FindManyDto,
+  PaginatedResponseDto,
+} from '@travel-booking-platform/nest';
 import { IsIn, IsMongoId, IsOptional, IsString } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { Types } from 'mongoose';
 
 export class CreateHotelRoomDto
-  extends OmitType(HotelRoomModel, ['__v', '_id', 'resourceType', 'updatedAt'])
+  extends OmitType(HotelRoomModel, [
+    '__v',
+    '_id',
+    'resourceType',
+    'updatedAt',
+    'creator',
+  ])
   implements CreateHotelRoom {}
 
 export class UpdateHotelRoomDto
   extends PartialType(OmitType(CreateHotelRoomDto, ['hotel']))
   implements UpdateHotelRoom {}
+
+export class HotelRoomResponseDto extends PaginatedResponseDto<HotelRoomModel> {
+  @ApiProperty({ type: [HotelRoomModel] })
+  docs: HotelRoomModel[];
+}
 
 export class FindManyHotelRoomDto
   extends FindManyDto

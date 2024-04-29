@@ -12,7 +12,7 @@ export interface Hotel {
 
 export type CreateHotel = Omit<
   Hotel,
-  '_id' | 'createdAt' | 'updatedAt' | 'resourceType'
+  '_id' | 'createdAt' | 'updatedAt' | 'resourceType' | 'creator'
 >;
 
 export type UpdateHotel = Partial<CreateHotel>;

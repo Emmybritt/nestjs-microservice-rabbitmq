@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
-import { AuthUser } from '@travel-booking-platform/types';
+import { AuthUser, TOKEN_TYPE } from '@travel-booking-platform/types';
 import * as bcrypt from 'bcrypt';
+import { plainToClass } from 'class-transformer';
+import { UserModel } from '../schemas';
 
 @Injectable()
 export class HelperClassService {
-  private readonly jwtService: JwtService = new JwtService();
+  public readonly jwtService: JwtService = new JwtService();
   constructor(
     private jwtSecrete: string,
     private jwtExp: string,
@@ -34,7 +36,9 @@ export class HelperClassService {
       disabled: user.disabled,
       disabledAt: user.disabledAt,
     };
-    console.log(this.jwtSecrete, 'jwt secrete');
+    const tokenize = plainToClass(UserModel, user);
+    console.log(tokenize, 'This is tkennize');
+
     const token = await this.jwtService.signAsync(tokenPayload, {
       expiresIn: this.jwtExp,
       secret: this.jwtSecrete,
@@ -43,9 +47,32 @@ export class HelperClassService {
       expiresIn: this.refreshTokenExp,
       secret: this.refreshTokenSecrete,
     });
+
+    console.log(token, 'This is token');
+
+    const { email, firstName, lastName } = tokenize;
+
+    const subject = user._id + '';
+    const access_token = this.jwtService.sign(
+      { ...tokenize, typ: 'Bearer' },
+      { subject, secret: this.jwtSecrete }
+    );
+    const refresh_token = this.jwtService.sign(
+      {
+        email,
+        firstName,
+        lastName,
+        typ: TOKEN_TYPE.refresh,
+      },
+      {
+        expiresIn: this.refreshTokenExp,
+        subject,
+        secret: this.refreshTokenSecrete,
+      }
+    );
     return {
-      accessToken: token,
-      refreshToken: await this.hashData(refreshToken),
+      accessToken: access_token,
+      refreshToken: await this.hashData(refresh_token),
     };
   }
 

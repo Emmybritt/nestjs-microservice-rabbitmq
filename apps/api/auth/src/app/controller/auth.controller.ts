@@ -4,8 +4,10 @@ import {
   LoginUserDto,
   Public,
   RegisterUserDto,
+  SessionUser,
 } from '@travel-booking-platform/nest';
 import { AuthService } from '../services/auth.service';
+import { User } from '@travel-booking-platform/types';
 
 @ApiTags('Auth')
 @ApiBearerAuth()
@@ -22,7 +24,7 @@ export class AuthController {
     return this.authService.register(registrationDto);
   }
   @Post('login')
-  login(@Body() loginUserDto: LoginUserDto) {
+  login(@Body() loginUserDto: LoginUserDto, @SessionUser() user: User) {
     return this.authService.login(loginUserDto);
   }
 }

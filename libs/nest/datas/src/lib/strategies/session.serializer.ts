@@ -19,10 +19,10 @@ export class SessionSerializer extends PassportSerializer {
     // return done(new UnauthorizedException());
     return await this.userService
       .findOne({ _id: user._id })
-      .then((user: any) => {
+      .then((user) => {
         if (user.disabled) throw new UnauthorizedException('Account disabled');
         return done(null, user);
       })
-      .catch(() => done(null, null));
+      .catch((error) => done(null, null));
   }
 }

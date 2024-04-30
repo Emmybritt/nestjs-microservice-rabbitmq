@@ -1,6 +1,19 @@
 import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
-import { HelperClassService, UserService } from '@travel-booking-platform/nest';
-import { CreateUser, LoginUser } from '@travel-booking-platform/types';
+import { JwtService } from '@nestjs/jwt';
+import {
+  HelperClassService,
+  UserModel,
+  UserService,
+} from '@travel-booking-platform/nest';
+import {
+  CreateUser,
+  LoginUser,
+  TOKEN_TYPE,
+  TokenResponse,
+  User,
+} from '@travel-booking-platform/types';
+import { plainToClass } from 'class-transformer';
+import { differenceInSeconds } from 'date-fns';
 
 @Injectable()
 export class AuthService extends HelperClassService {
@@ -22,23 +35,45 @@ export class AuthService extends HelperClassService {
     );
 
     if (!passwordMatch) {
-      throw new ForbiddenException('Incorrect email or password');
+      throw new ForbiddenException('Incorrect email ors password');
     }
-    const token = await this.generateTokens(user);
-    console.log(token, 'This is the token');
-    return this.userService
-      .update({ email: user.email }, { refreshToken: token.refreshToken })
-      .then((user) => {
-        const response = {
-          user,
-          accessToken: token.accessToken,
-          refreshToken: token.refreshToken,
-        };
-        return response;
-      });
+    return this.token(user);
   }
 
   async register(createUser: CreateUser) {
     return this.userService.create(createUser);
+  }
+
+  token(user: User): TokenResponse {
+    const tokenize = plainToClass(UserModel, user);
+    const { email, firstName } = tokenize;
+    const subject = user._id + '';
+    const access_token = this.jwtService.sign(
+      { ...tokenize, typ: 'Bearer' },
+      { subject, secret: process.env.JWT_SECRET }
+    );
+    const refresh_token = this.jwtService.sign(
+      {
+        email,
+        firstName,
+        typ: TOKEN_TYPE.refresh,
+      },
+      { expiresIn: '30d', subject, secret: process.env.REFRESH_SECRET }
+    );
+    const now = new Date();
+    return {
+      access_token,
+      refresh_token,
+      expires_in: differenceInSeconds(
+        this.jwtService.decode(access_token)['exp'] * 1000,
+        now
+      ),
+      refresh_expires_in: differenceInSeconds(
+        this.jwtService.decode(refresh_token)['exp'] * 1000,
+        now
+      ),
+      not_before_policy: 0,
+      token_type: TOKEN_TYPE.bearer,
+    } as any;
   }
 }

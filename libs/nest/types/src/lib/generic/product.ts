@@ -3,6 +3,13 @@ export enum RESOURCE {
   hotels = 'Hotel',
   hotelRoom = 'HotelRoom',
   hotelRoomReservation = 'HotelRoomReservation',
+  airport = 'Airport',
+  airline = 'Airline',
+  flight = 'Flight',
+  aircraft = 'Aircraft',
+  airCraftSeat = 'AirCrafSeat',
+  passenger = 'Passenger',
+  flightBooking = 'FlightBooking',
 }
 
 export enum USER_ROLE {
@@ -19,4 +26,10 @@ export enum COLLECTIONS {
   hotelRooms = 'hotel-rooms',
   hotelRoomReservations = 'hotel-room-reservations',
   roomAvailability = 'room-availabilities',
+  airport = 'airports',
+  airline = 'airlines',
+  flight = 'flights',
+  AirCraftSeat = 'aircraft-seats',
+  passenger = 'passengers',
+  flightBooking = 'flight-bookings',
 }

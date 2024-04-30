@@ -1,6 +1,6 @@
 import { AnyMongoAbility } from '@casl/ability';
 import { accessibleBy } from '@casl/mongoose';
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {
   Action,
@@ -46,6 +46,23 @@ export class UserService {
   find(query: FindManyUser, ability: AnyMongoAbility) {
     const filters: FilterQuery<User> = this.getFindManyFilters(query, ability);
     return findManyWrapper<UserDocument>(this.userModel, filters, query);
+  }
+
+  findOneById(
+    _id: string,
+    findOne: FindOne = { lean: true },
+    ability?: AnyMongoAbility
+  ) {
+    if (!_id) {
+      throw new BadRequestException('User Id is required');
+    }
+    return findOneWrapper<UserDocument>(
+      this.userModel.findOne(
+        this.getAbilityFilters({ _id }, Action.view, ability)
+      ),
+      findOne,
+      'User'
+    );
   }
 
   private getFindManyFilters(query: FindManyUser, ability: AnyMongoAbility) {

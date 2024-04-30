@@ -7,6 +7,7 @@ export interface HotelRoomReservation {
   user: string;
   room: string;
   check_in_date: string | Date;
+  check_out_date: string | Date;
   reservation_date: string | Date;
   is_confirmed: boolean;
   updatedAt: string | boolean;
@@ -14,7 +15,7 @@ export interface HotelRoomReservation {
 
 export type CreateRoomHotelReservation = Pick<
   HotelRoomReservation,
-  'check_in_date' | 'room' | 'is_confirmed'
+  'check_in_date' | 'room' | 'is_confirmed' | 'check_out_date'
 >;
 
 export type UpdateHotelReservation = Partial<

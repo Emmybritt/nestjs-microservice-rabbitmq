@@ -17,6 +17,7 @@ export class LoginAuthGuard extends AuthGuard('jwt') {
       context.getClass(),
     ]);
     const req: Request = context.switchToHttp().getRequest();
+    console.log(req.user, 'This is the request in LoginAuthGuards');
 
     if (isPublic) {
       this.logger.debug(`Granting access to public route: ${req.url}`);

@@ -83,6 +83,20 @@ export class HotelRoomReservationModel implements HotelRoomReservation {
   })
   check_in_date: string | Date;
 
+  @Prop({
+    type: Date,
+    required: true,
+    trim: true,
+  })
+  @IsDate()
+  @IsNotEmpty()
+  @ApiProperty({
+    type: String,
+    example: new Date(),
+    description: 'the date the user is going to check out of hotel',
+  })
+  check_out_date: string | Date;
+
   @Prop({ type: Boolean, default: true })
   @ApiProperty({ type: Boolean, default: true })
   @IsBoolean()

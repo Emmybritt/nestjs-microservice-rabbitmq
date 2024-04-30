@@ -6,6 +6,8 @@ import { environment } from '../environments/environment';
 import { JobsModule } from './jobs/jobs.module';
 import { AuthService } from './services/auth.service';
 import { AuthController } from './controller/auth.controller';
+import { LocalStrategy } from './strategies/local.strategy';
+import { RefreshStrategy } from './strategies/refrsh.strategy';
 
 @Module({
   imports: [
@@ -14,7 +16,7 @@ import { AuthController } from './controller/auth.controller';
     NestDataModule.forRoot(environment),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, LocalStrategy, RefreshStrategy],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

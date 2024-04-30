@@ -11,6 +11,7 @@ export class CreateHotelRoomReservationDto
     'room',
     'is_confirmed',
     'check_in_date',
+    'check_out_date',
   ])
   implements CreateRoomHotelReservation {}
 

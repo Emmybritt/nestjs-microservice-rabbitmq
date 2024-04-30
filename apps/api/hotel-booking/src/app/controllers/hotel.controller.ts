@@ -43,6 +43,7 @@ export class HotelController {
   @CaslAction(Action.create, RESOURCE.hotels)
   @ApiCreatedResponse({ type: HotelModel })
   create(@Body() hotel: CreateHotelDto, @SessionUser() user: AuthUser) {
+    console.log(user)
     return this.hotelService.create({ ...hotel, creator: user._id });
   }
 

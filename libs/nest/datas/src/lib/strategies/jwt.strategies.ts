@@ -1,25 +1,27 @@
-import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy, StrategyOptions } from 'passport-jwt';
-import { ModuleConfig } from '../module.config';
-import { TOKEN_TYPE } from '@travel-booking-platform/types';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { UserService } from '../services';
+import { AuthUser } from '@travel-booking-platform/types';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
-  private readonly logger = new Logger(JwtStrategy.name);
-  constructor(config: ModuleConfig) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
+  constructor(
+    private readonly userService: UserService,
+    private configService: ConfigService
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: config.jwt.secret,
-      passReqToCallback: false,
-      audience: config.jwt.audience,
-      issuer: config.jwt.issuer,
-    } as StrategyOptions);
+      secretOrKey: configService.get<string>('JWT_SECRET'),
+    });
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async validate(payload: any, done: (arg0: null, arg1: any) => any) {
-    if (payload.typ !== TOKEN_TYPE.bearer) throw new UnauthorizedException();
-    return done(null, payload);
+  async validate(payload: AuthUser) {
+    const user = this.userService.findOne({ _id: payload._id });
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    return payload;
   }
 }

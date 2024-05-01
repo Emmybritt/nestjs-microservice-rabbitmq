@@ -13,7 +13,6 @@ export const AbilitiesMiddleware = (
     try {
       const jwtService = new JwtService({ secret: process.env.JWT_SECRET });
       const user = jwtService.verify(token.replace('Bearer ', ''));
-      console.log(user);
       if (user) {
         const abilities = defineAbilitiesFor(user);
         req['abilities'] = abilities;

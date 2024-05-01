@@ -143,7 +143,7 @@ export class HotelService {
   ) {
     if (!ability) return filter;
     return {
-      $and: [filter, accessibleBy(ability, action).ofType('Hotel')],
+      $and: [filter, accessibleBy(ability, action).ofType(RESOURCE.hotels)],
     };
   }
 }

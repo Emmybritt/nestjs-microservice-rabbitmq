@@ -54,6 +54,7 @@ export async function bootstrapNestApp<T>(
         AppModule,
         new FastifyAdapter({ bodyLimit: 256 * 100000 })
       );
+  app.use(AbilitiesMiddleware);
 
   if (useExpress) {
     const redisClient = new Redis(environment.redis);
@@ -85,7 +86,6 @@ export async function bootstrapNestApp<T>(
     }
     app.use(passport.session());
   }
-  app.use(AbilitiesMiddleware);
   app.use(RequestIp());
 
   addValidatitors(app);

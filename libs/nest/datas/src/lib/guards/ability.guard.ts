@@ -51,6 +51,7 @@ export class CaslAbilityGuard implements CanActivate {
       url: req.url,
       userId: user?._id,
       userEmail: user?.email,
+      role: user?.role,
     };
     if (access)
       this.logger.debug(`Access granted for user: ${user?._id}`, reqLog);

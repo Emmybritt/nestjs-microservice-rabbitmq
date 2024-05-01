@@ -17,6 +17,7 @@ export const defineAbilitiesFor = (u: AuthUser) => {
   return build({
     // Read https://casl.js.org/v5/en/guide/subject-type-detection#use-classes-as-subject-types for details
     detectSubjectType: (item) => {
+      console.log(item, "itemmmm")
       return (
         item['resourceType'] || (item.constructor as ExtractSubjectType<any>)
       );

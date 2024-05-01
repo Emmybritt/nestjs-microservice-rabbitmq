@@ -1,17 +1,26 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { User } from '@travel-booking-platform/types';
 import { NextFunction, Request, Response } from 'express';
 import { defineAbilitiesFor } from '../abilities';
-
+import { JwtService } from '@nestjs/jwt';
 export const AbilitiesMiddleware = (
-  req: Request | any,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const user: User = req.user as User; // Assuming the user is attached to the request object after authentication
-  if (user) {
-    const abilities = defineAbilitiesFor(user);
-    req['abilities'] = abilities;
+  const token = req.headers.authorization;
+
+  if (token) {
+    try {
+      const jwtService = new JwtService({ secret: process.env.JWT_SECRET });
+      const user = jwtService.verify(token.replace('Bearer ', ''));
+      console.log(user);
+      if (user) {
+        const abilities = defineAbilitiesFor(user);
+        req['abilities'] = abilities;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
   next();
 };

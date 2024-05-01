@@ -1,4 +1,4 @@
-import { Address, RESOURCE } from '../generic';
+import { RESOURCE } from '../generic';
 import { FindMany } from '../query-params';
 
 export enum AIRCRAFT_TYPE {
@@ -17,9 +17,9 @@ export interface Aircraft {
 
 export type CreateAircraft = Pick<Aircraft, 'name'>;
 
-export type UpdateAirport = Partial<CreateAircraft>;
+export type UpdateAircraft = Partial<CreateAircraft>;
 
-export interface FindManyAirports extends FindMany {
+export interface FindManyAirCrafts extends FindMany {
   _id: string[];
   name: string[];
 }
